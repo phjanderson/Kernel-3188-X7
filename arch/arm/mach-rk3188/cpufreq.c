@@ -435,8 +435,9 @@ static int rk3188_cpufreq_init_cpu0(struct cpufreq_policy *policy)
 	}
 #endif
 	clk_enable_dvfs(gpu_clk);
-	if (gpu_is_mali400)
-		dvfs_clk_enable_limit(gpu_clk, 133000000, 600000000);
+//PHJA: allow GPU clock over 600mhz
+//	if (gpu_is_mali400)
+//		dvfs_clk_enable_limit(gpu_clk, 133000000, 600000000);
 
 	clk_enable_dvfs(ddr_clk);
 

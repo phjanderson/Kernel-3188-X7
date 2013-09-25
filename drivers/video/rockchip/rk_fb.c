@@ -360,6 +360,9 @@ static int rk_fb_ioctl(struct fb_info *info, unsigned int cmd,unsigned long arg)
 			printk("rk fb use %d buffers\n",num_buf);
 			break;
 		case RK_FBIOSET_VSYNC_ENABLE:
+#ifdef CONFIG_VSYNCFIX_SAM321
+			return 0;
+#endif
 			if (copy_from_user(&enable, argp, sizeof(enable)))
 				return -EFAULT;
 			dev_drv->vsync_info.active = enable;
@@ -777,7 +780,9 @@ static int rk_fb_wait_for_vsync_thread(void *data)
 	while (!kthread_should_stop()) {
 		ktime_t timestamp = dev_drv->vsync_info.timestamp;
 		int ret = wait_event_interruptible(dev_drv->vsync_info.wait,
-			!ktime_equal(timestamp, dev_drv->vsync_info.timestamp) &&   //modify by nition
+#ifndef CONFIG_VSYNCFIX_PHJA
+			!ktime_equal(timestamp, dev_drv->vsync_info.timestamp) &&
+#endif
 			dev_drv->vsync_info.active);
 
 		if (!ret) {
