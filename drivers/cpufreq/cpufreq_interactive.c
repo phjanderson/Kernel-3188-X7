@@ -66,11 +66,11 @@ static struct mutex gov_lock;
 static unsigned int hispeed_freq;
 
 /* Go to hi speed when CPU load at or above this value. */
-#define DEFAULT_GO_HISPEED_LOAD 99
+#define DEFAULT_GO_HISPEED_LOAD CONFIG_CPU_FREQ_GOV_INTERACTIVE_DEFAULT_GO_HISPEED_LOAD
 static unsigned long go_hispeed_load = DEFAULT_GO_HISPEED_LOAD;
 
 /* Target load.  Lower values result in higher CPU speeds. */
-#define DEFAULT_TARGET_LOAD 90
+#define DEFAULT_TARGET_LOAD CONFIG_CPU_FREQ_GOV_INTERACTIVE_DEFAULT_TARGET_LOAD
 static unsigned int default_target_loads[] = {DEFAULT_TARGET_LOAD};
 static spinlock_t target_loads_lock;
 static unsigned int *target_loads = default_target_loads;
@@ -923,12 +923,12 @@ static int cpufreq_governor_interactive(struct cpufreq_policy *policy,
 		freq_table =
 			cpufreq_frequency_get_table(policy->cpu);
 		if (!hispeed_freq)
-#ifdef CONFIG_PLAT_RK
+#if defined(CONFIG_PLAT_RK) && defined(CONFIG_CPU_FREQ_GOV_INTERACTIVE_RK_OVERRIDE_HISPEED_FREQ)
 		{
 			unsigned int index;
 			hispeed_freq = policy->max;
-			if (policy->min < 816000)
-				hispeed_freq = 816000;
+			if (policy->min < CONFIG_CPU_FREQ_GOV_INTERACTIVE_RK_MIN_HISPEED_FREQ)
+				hispeed_freq = CONFIG_CPU_FREQ_GOV_INTERACTIVE_RK_MIN_HISPEED_FREQ;
 			else if (cpufreq_frequency_table_target(policy, freq_table, policy->min + 1, CPUFREQ_RELATION_L, &index) == 0)
 				hispeed_freq = freq_table[index].frequency;
 		}

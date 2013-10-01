@@ -183,6 +183,39 @@ config CPU_FREQ_GOV_INTERACTIVE
 
 	  If in doubt, say N.
 
+config CPU_FREQ_GOV_INTERACTIVE_DEFAULT_GO_HISPEED_LOAD
+	depends on CPU_FREQ_GOV_INTERACTIVE
+	int "Default go hispeed load"
+	default 99
+	help
+	  When CPU load hits the value specifie, the CPU is
+	  ramped to an intermediate "hi speed". If load stays
+	  high for the amount of time specified in
+	  above_hispeed_delay, then speed may be bumped higher.
+
+config CPU_FREQ_GOV_INTERACTIVE_DEFAULT_TARGET_LOAD
+	depends on CPU_FREQ_GOV_INTERACTIVE
+	int "Default target load"
+	default 90
+	help
+	  Lower values result in higher CPU speeds.
+
+config CPU_FREQ_GOV_INTERACTIVE_RK_OVERRIDE_HISPEED_FREQ
+	depends on CPU_FREQ_GOV_INTERACTIVE && PLAT_RK
+	bool "RK override the hispeed frequency"
+	default y
+	help
+	  By default the interactive CPU frequency governor
+	  sets the hispeed frequency to the maximum CPU
+	  frequency. Rockchip modifies this to either
+	  CPU_FREQ_GOV_INTERACTIVE_RK_MIN_HISPEED_FREQ
+	  or one of the intermediate frequencies.
+
+config CPU_FREQ_GOV_INTERACTIVE_RK_MIN_HISPEED_FREQ
+	depends on CPU_FREQ_GOV_INTERACTIVE_RK_OVERRIDE_HISPEED_FREQ
+	int "RK minimum highspeed frequency"
+	default 816000	  
+
 config CPU_FREQ_GOV_CONSERVATIVE
 	tristate "'conservative' cpufreq governor"
 	depends on CPU_FREQ
