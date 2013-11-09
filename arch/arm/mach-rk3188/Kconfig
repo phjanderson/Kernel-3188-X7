@@ -301,6 +301,15 @@ config	RK_DDR_640_VOLT
 	int "640 MHz DDR voltage (mV)"
 	default "1100"
 
+config	RK_DDR_667
+	bool "667 MHz DDR (overclock!)"
+	default n
+
+config	RK_DDR_667_VOLT
+	depends on RK_DDR_667
+	int "667 MHz DDR voltage (mV)"
+	default "1100"
+
 config	RK_DDR_672
 	bool "672 MHz DDR (overclock!)"
 	default n

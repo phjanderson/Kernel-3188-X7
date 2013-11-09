@@ -2175,6 +2175,9 @@ static struct cpufreq_frequency_table dvfs_ddr_table[] = {
 #ifdef CONFIG_RK_DDR_640
 	{.frequency = 640 * 1000 + DDR_FREQ_NORMAL,     .index = CONFIG_RK_DDR_640_VOLT * 1000},
 #endif
+#ifdef CONFIG_RK_DDR_667
+	{.frequency = 667 * 1000 + DDR_FREQ_NORMAL,     .index = CONFIG_RK_DDR_667_VOLT * 1000},
+#endif
 #ifdef CONFIG_RK_DDR_672
 	{.frequency = 672 * 1000 + DDR_FREQ_NORMAL,     .index = CONFIG_RK_DDR_672_VOLT * 1000},
 #endif
